@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace algorythms_semester_work
@@ -24,10 +25,19 @@ namespace algorythms_semester_work
 
         public void ReconnectNode()
         {
-            foreach (var edge in Edges)
-                Edges.Remove(edge);
+            for(var e = 0; e < Edges.Count; e++)
+                Edges.Remove(Edges[e]);
         }
 
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            var result = "";
+            if (Edges.Any())
+                foreach (var e in Edges)
+                    result += $"{Name}: {e} \n";
+            else
+                result += $"{Name} single node \n";
+            return result;
+        }
     }
 }

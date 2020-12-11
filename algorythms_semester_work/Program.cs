@@ -7,8 +7,8 @@ namespace algorythms_semester_work
     {
         static void Main(string[] args)
         {
-            //Check();
-            new ConsoleWorker().StartProcessing();
+            Check();
+            //new ConsoleWorker().StartProcessing();
         }
 
         static void Check()
@@ -20,6 +20,18 @@ namespace algorythms_semester_work
             g.AddNode("FIVE");
             g.ConnectNodes("ONE", "FOUR", 100);
             Write(g);
+
+            WriteLine();
+            Write(g.FindNode("ONE"));
+            WriteLine();
+
+            g.RemoveNode("FIVE");
+            WriteLine(g);
+
+            WriteLine();
+            g.RemoveNode("FOUR");
+            WriteLine(g);
+
             ReadKey();
         }
     }

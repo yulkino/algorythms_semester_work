@@ -65,7 +65,7 @@ namespace algorythms_semester_work
         {
             string result = "";
             foreach (var n in node.Edges)
-                result += $"{n.Node1} connected with {n.Node2}\n";
+                result += $"{n.Node1} connected with {n.Node2} \n";
             return result;
         }
 
@@ -75,19 +75,14 @@ namespace algorythms_semester_work
         public void RemoveNode(Node node)
         {
             node.ReconnectNode();
+            Nodes.Remove(node);
         }
 
         public override string ToString()
         {
             string result = "";
             foreach (var n in Nodes)
-            {
-                if (n.Edges.Any())
-                    foreach (var e in n.Edges)
-                        result += $"{e}\n";
-                else
-                    result += $"{n.Name} don't have any connections\n";
-            }
+                result += n;
             return result;
         }
     }

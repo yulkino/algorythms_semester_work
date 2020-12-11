@@ -19,8 +19,6 @@ namespace algorythms_semester_work
         }
 
         public override string ToString()
-        {
-            return $"{Node1} connected with {Node2} with weight {Weight}";
-        }
+            => $"{Node1.Name} <--{Weight}--> {Node2.Name} ";
     }
 }
