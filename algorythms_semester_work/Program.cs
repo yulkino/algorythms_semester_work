@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Console;
 
 namespace algorythms_semester_work
 {
@@ -6,7 +7,20 @@ namespace algorythms_semester_work
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //Check();
+            new ConsoleWorker().StartProcessing();
+        }
+
+        static void Check()
+        {
+            var g = new WeightedGraph();
+            g.ConnectNodes("ONE", "TWO", 12);
+            g.AddNode(new Node("TREE"));
+            g.ConnectNodes("FOUR", "TREE", 89);
+            g.AddNode("FIVE");
+            g.ConnectNodes("ONE", "FOUR", 100);
+            Write(g);
+            ReadKey();
         }
     }
 }
