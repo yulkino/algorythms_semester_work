@@ -8,6 +8,7 @@ namespace algorythms_semester_work
     public class WeightedGraph
     {
         public List<Node> Nodes { get; private set; }
+        HashSet<string> keys = new HashSet<string>();
         
         public WeightedGraph()
         {
@@ -19,43 +20,44 @@ namespace algorythms_semester_work
 
         public void AddNode(Node node)
         {
-            Nodes.Add(node);
+            if (!keys.Contains(node.Name))
+            {
+                Nodes.Add(node);
+                keys.Add(node.Name);
+            }
         }
 
-        public void ConnectNodes(string nodeName1, string nodeName2, int weight) 
+        public void ConnectNodes(string nodeName1, string nodeName2, int weight)
             => ConnectNodes(
-                CheckNodeInGraph(nodeName1) ? FindNode(nodeName1) : new Node(nodeName1), 
-                CheckNodeInGraph(nodeName2) ? FindNode(nodeName2) : new Node(nodeName2), 
+                FindNode(nodeName1) ?? new Node(nodeName1), 
+                FindNode(nodeName2) ?? new Node(nodeName2), 
                 weight);
 
         public void ConnectNodes(Node node1, Node node2, int weight)
         {
             if (!CheckNodeInGraph(node1))
-                Nodes.Add(node1);
+                AddNode(node1);
             if (!CheckNodeInGraph(node2))
-                Nodes.Add(node2);
+                AddNode(node2);
             node1.ConnectNode(node2, weight);
         }
 
 
         public bool CheckNodeInGraph(Node node)
-            => Nodes.Select(n => n.Name).Contains(node?.Name);
+            => keys.Contains(node?.Name);
 
         public bool CheckNodeInGraph(string nodeName)
-            => Nodes.Select(n => n.Name).Contains(nodeName);
+            => keys.Contains(nodeName);
 
-        Node FindNode(Node node) 
+        public Node FindNode(Node node) 
             => FindNode(node?.Name);
 
         public Node FindNode(string nameNode)
         {
-            if (nameNode == null) return null;
-            foreach (var n in Nodes)
-            {
-                if (nameNode.CompareTo(n.Name) == 0)
-                    return n;
-            }
-            return null;
+            if (nameNode != null && keys.Contains(nameNode))
+               return Nodes.FirstOrDefault(node => node.Name == nameNode);
+            else
+                return null;
         }
 
         public string ShowFindNode(string nameNode) 
@@ -74,8 +76,22 @@ namespace algorythms_semester_work
 
         public void RemoveNode(Node node)
         {
+            RemoveEdgesOfIncidentsNodes(node);
             node.ReconnectNode();
             Nodes.Remove(node);
+            keys.Remove(node.Name);
+        }
+
+        void RemoveEdgesOfIncidentsNodes(Node node)
+        {
+            List<Node> incidentsNodes = new List<Node>();
+            foreach (var e in node.Edges)
+                if (e.Node1 == node)
+                    incidentsNodes.Add(e.Node2);
+                else
+                    incidentsNodes.Add(e.Node1);
+            foreach (var n in incidentsNodes)
+                n.RemoveEdge(node);
         }
 
         public override string ToString()

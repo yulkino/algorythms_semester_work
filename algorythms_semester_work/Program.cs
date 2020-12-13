@@ -13,24 +13,25 @@ namespace algorythms_semester_work
 
         static void Check()
         {
-            var g = new WeightedGraph();
-            g.ConnectNodes("ONE", "TWO", 12);
-            g.AddNode(new Node("TREE"));
-            g.ConnectNodes("FOUR", "TREE", 89);
-            g.AddNode("FIVE");
-            g.ConnectNodes("ONE", "FOUR", 100);
-            Write(g);
+            var graph = new WeightedGraph();
+            graph.ConnectNodes("ONE", "TWO", 12);
+            graph.AddNode(new Node("TREE"));
+            graph.ConnectNodes("FOUR", "TREE", 89);
+            graph.AddNode("FIVE");
+            graph.ConnectNodes("ONE", "FOUR", 100);
+            graph.ConnectNodes("ONE", "FOUR", 100);
+            Write(graph);
 
             WriteLine();
-            Write(g.FindNode("ONE"));
+            Write(graph.FindNode("ONE"));
             WriteLine();
 
-            g.RemoveNode("FIVE");
-            WriteLine(g);
+            graph.RemoveNode("FIVE");
+            WriteLine(graph);
 
             WriteLine();
-            g.RemoveNode("FOUR");
-            WriteLine(g);
+            graph.RemoveNode("FOUR");
+            WriteLine(graph);
 
             ReadKey();
         }

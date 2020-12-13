@@ -8,25 +8,33 @@ namespace algorythms_semester_work
     public class Node
     {
         public string Name { get; private set; }
-        public List<Edge> Edges { get; private set; }
+        public HashSet<Edge> Edges { get; private set; }
 
         public Node(string nameNode)
         {
             Name = nameNode;
-            Edges = new List<Edge>();
+            Edges = new HashSet<Edge>();
         }
 
         public void ConnectNode(Node node, int weight)
         {
-            var edge = new Edge().CreateConnection(this, node, weight);
-            Edges.Add(edge);
-            node.Edges.Add(edge);
+            var edge = new Edge(this, node, weight);
+            if (!Edges.Contains(edge))
+            {
+                Edges.Add(edge);
+                node.Edges.Add(edge);
+            }
         }
 
         public void ReconnectNode()
         {
-            for(var e = 0; e < Edges.Count; e++)
-                Edges.Remove(Edges[e]);
+            while(Edges.Any())
+                Edges.Remove(Edges.First());
+        }
+        
+        public void RemoveEdge(Node node)
+        {
+            Edges.RemoveWhere(edge => edge.Node1 == node || edge.Node2 == node);
         }
 
         public override string ToString()
