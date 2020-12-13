@@ -10,13 +10,13 @@ namespace algorythms_semester_work
     {
         public void StartProcessing()
         {
-            Write(BuildNewWeightGrahp());
+            var graph = BuildNewWeightGrahp(5);
+            WriteLine(graph);
             ReadKey();
         }
 
-        WeightedGraph BuildNewWeightGrahp()
+        WeightedGraph BuildNewWeightGrahp(int countNode)
         {
-            var countNode = new Random().Next(1, 11);
             var weightGraph = new WeightedGraph();
             for (var i = 0; i < countNode; i++)
             {
@@ -29,6 +29,8 @@ namespace algorythms_semester_work
             }
             return weightGraph;
         }
+
+
 
         public int RandomNode(int node, int min, int max)
         {

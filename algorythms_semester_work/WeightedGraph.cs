@@ -76,22 +76,20 @@ namespace algorythms_semester_work
 
         public void RemoveNode(Node node)
         {
-            RemoveEdgesOfIncidentsNodes(node);
-            node.ReconnectNode();
             Nodes.Remove(node);
             keys.Remove(node.Name);
+            Edge edge;
+            while (node.Edges.Any())
+            {
+                edge = node.Edges.First();
+                Disconnect(edge);
+            }
         }
 
-        void RemoveEdgesOfIncidentsNodes(Node node)
+        public void Disconnect(Edge edge)
         {
-            List<Node> incidentsNodes = new List<Node>();
-            foreach (var e in node.Edges)
-                if (e.Node1 == node)
-                    incidentsNodes.Add(e.Node2);
-                else
-                    incidentsNodes.Add(e.Node1);
-            foreach (var n in incidentsNodes)
-                n.RemoveEdge(node);
+            edge.Node1.Edges.Remove(edge);
+            edge.Node2.Edges.Remove(edge);
         }
 
         public override string ToString()
