@@ -7,33 +7,49 @@ namespace algorythms_semester_work
     {
         static void Main(string[] args)
         {
-            //Check();
-            new ConsoleWorker().StartProcessing();
+            var network = Check(6);
+            WriteLine(new Algorythm().KruskalsAlgorythm(network));
+            ReadKey();
+            //new ConsoleWorker().StartProcessing();
         }
 
-        static void Check()
+        static WeightedGraph Check(int countNode)
         {
-            var graph = new WeightedGraph();
-            graph.ConnectNodes("ONE", "TWO", 12);
-            graph.AddNode(new Node("TREE"));
-            graph.ConnectNodes("FOUR", "TREE", 89);
-            graph.AddNode("FIVE");
-            graph.ConnectNodes("ONE", "FOUR", 100);
-            graph.ConnectNodes("FOUR", "ONE", 100);
-            Write(graph);
-
-            WriteLine();
-            Write(graph.FindNode("ONE"));
-            WriteLine();
-
-            graph.RemoveNode("FIVE");
-            WriteLine(graph);
-
-            WriteLine();
-            graph.RemoveNode("FOUR");
-            WriteLine(graph);
-
-            ReadKey();
+            var network = new WeightedGraph();
+            for (var i = 0; i < countNode; i++)
+            {
+                if (!network.CheckNodeInGraph("Router_" + i))
+                    network.AddNode("Router_" + i);
+                for (var j = 0; j < countNode; j++)
+                    if (i != j)
+                        network.ConnectNodes("Router_" + i, "Router_" + j, new Random().Next(0, 501));
+            }
+            for (var i = 0; i < 5; i++)
+            {
+                if (!network.CheckNodeInGraph("Station_" + i))
+                    network.AddNode("Station_" + i);
+            }
+            //network.ConnectNodes("Router_" + 0, "Router_" + 5, 50);
+            //network.ConnectNodes("Router_" + 1, "Router_" + 4, 61);
+            //network.ConnectNodes("Router_" + 3, "Router_" + 4, 76);
+            //network.ConnectNodes("Router_" + 5, "Router_" + 4, 112);
+            //network.ConnectNodes("Router_" + 1, "Router_" + 5, 139);
+            //network.ConnectNodes("Router_" + 2, "Router_" + 5, 141);
+            //network.ConnectNodes("Router_" + 0, "Router_" + 4, 226);
+            //network.ConnectNodes("Router_" + 2, "Router_" + 0, 279);
+            //network.ConnectNodes("Router_" + 2, "Router_" + 3, 283);
+            //network.ConnectNodes("Router_" + 0, "Router_" + 3, 318);
+            //network.ConnectNodes("Router_" + 1, "Router_" + 2, 398);
+            //network.ConnectNodes("Router_" + 2, "Router_" + 4, 451);
+            //network.ConnectNodes("Router_" + 3, "Router_" + 5, 468);
+            //network.ConnectNodes("Router_" + 0, "Router_" + 1, 478);
+            //network.ConnectNodes("Router_" + 1, "Router_" + 3, 486);
+            network.ConnectNodes("Station_" + 0, "Router_" + 0, 5);
+            network.ConnectNodes("Station_" + 1, "Router_" + 1, 6);
+            network.ConnectNodes("Station_" + 2, "Router_" + 3, 2);
+            network.ConnectNodes("Station_" + 3, "Router_" + 5, 7);
+            network.ConnectNodes("Station_" + 4, "Router_" + 2, 8);
+            return (network);;
         }
     }
 }
