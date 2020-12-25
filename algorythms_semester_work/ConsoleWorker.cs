@@ -10,32 +10,45 @@ namespace algorythms_semester_work
     {
         public void StartProcessing()
         {
-            var graph = BuildNewWeightGrahp(5);
-            WriteLine(graph);
-            ReadKey();
-        }
-
-        WeightedGraph BuildNewWeightGrahp(int countNode)
-        {
-            var weightGraph = new WeightedGraph();
-            for (var i = 0; i < countNode; i++)
+            Clear();
+            WriteLine("What do you want:\n" +
+                "1. Random graph\n" +
+                "2. Network of routers");
+            var key = ReadKey();
+            switch(key.Key)
             {
-                if(!weightGraph.CheckNodeInGraph(i.ToString()))
-                    weightGraph.AddNode(i.ToString());
-                while(new Random().Next(0, 2) == 1)
-                {
-                    weightGraph.ConnectNodes(i.ToString(), RandomNode(i, 0, countNode - 1).ToString(), new Random().Next(0, 501));
-                }
-            }
-            return weightGraph;
+                case ConsoleKey.D1:
+                    ShowRandomGraph();
+                    break;
+                case ConsoleKey.D2:
+                    ShowShowNetwork();
+                    break;
+            };
         }
 
-
-
-        public int RandomNode(int node, int min, int max)
+        public void ShowRandomGraph()
         {
-            int a;
-            return (a = new Random().Next(min, max)) == node ? RandomNode(node, min, max) : a;
+            Clear();
+            var graphWorker = new GraphWorker();
+            var graph = graphWorker.BuildNewWeightGrahp(10);
+            WriteLine(graph);
+            ReturnIntoStrtWindow();
+        }
+
+        public void ShowShowNetwork()
+        {
+            Clear();
+            var graphWorker = new GraphWorker();
+            var network = graphWorker.CreateNetwork(4);
+            WriteLine(network);
+            ReturnIntoStrtWindow();
+        }
+
+        public void ReturnIntoStrtWindow()
+        {
+            var key = ReadKey();
+            if (key.Key == ConsoleKey.Escape)
+                StartProcessing();
         }
     }
 }

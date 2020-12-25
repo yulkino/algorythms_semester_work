@@ -7,8 +7,8 @@ namespace algorythms_semester_work
     {
         static void Main(string[] args)
         {
-            Check();
-            //new ConsoleWorker().StartProcessing();
+            //Check();
+            new ConsoleWorker().StartProcessing();
         }
 
         static void Check()
