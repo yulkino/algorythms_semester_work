@@ -86,11 +86,6 @@ namespace algorythms_semester_work
             }
         }
 
-        public void IsConnectivity()
-        {
-            
-        }
-
         public void Disconnect(Edge edge)
         {
             edge.Node1.Edges.Remove(edge);

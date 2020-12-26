@@ -5,20 +5,21 @@ using System.Linq;
 
 namespace algorythms_semester_work
 {
-    class Algorythm
+    class Algorythms
     {
+        #region KruskalsAlgorythm
         public WeightedGraph KruskalsAlgorythm(WeightedGraph graph)
         {
             var result = new WeightedGraph();
             var unicEdges = graph.Nodes.SelectMany(x => x.Edges).Distinct().OrderBy(e => e.Weight).ToList();
-            List<List<string>> set = new List<List<string>>();
-            PrimaryProcessing(set, unicEdges, result);
+            List<List<string>> sets = new List<List<string>>();
+            PrimaryProcessing(sets, unicEdges, result);
             for (var i = 0; i < unicEdges.Count; i++)
             {
-                if (!IsCycle(set, unicEdges[i].Node1.Name, unicEdges[i].Node2.Name))
+                if (!IsCycle(sets, unicEdges[i].Node1.Name, unicEdges[i].Node2.Name))
                 {
                     result.ConnectNodes(unicEdges[i].Node1.Name, unicEdges[i].Node2.Name, unicEdges[i].Weight);
-                    AddToSubSet(set, unicEdges[i]);
+                    AddToSubSet(sets, unicEdges[i]);
                     unicEdges.Remove(unicEdges[i]);
                     i = -1;
                 }
@@ -116,6 +117,59 @@ namespace algorythms_semester_work
                 if (set[i].Contains(nameNode1) && set[i].Contains(nameNode2))
                     return true;
             return false;
+        }
+        #endregion
+
+        public WeightedGraph ReverseDeleteAlgorythm(WeightedGraph graph)
+        {
+            var unicEdges = graph.Nodes
+                .SelectMany(x => x.Edges)
+                .Where(x => !x.Node1.Name.Contains("Station"))
+                .Distinct()
+                .OrderByDescending(e => e.Weight)
+                .ToList();
+            HashSet<string> setOfAllNameNode = new HashSet<string>();
+            setOfAllNameNode = PrimaryInitialization(unicEdges, setOfAllNameNode);
+            for(var i = 0; i < unicEdges.Count; i++)
+            {
+                var currentEdge = unicEdges[i];
+                unicEdges.Remove(unicEdges[i]);
+                graph.Disconnect(currentEdge);
+                if (IsNotConnectivity(graph, setOfAllNameNode))
+                    graph.ConnectNodes(currentEdge.Node1.Name, currentEdge.Node2.Name, currentEdge.Weight);
+                i = -1;
+            }
+            return graph;
+        }
+
+        bool IsNotConnectivity(WeightedGraph graph, HashSet<string> setOfAllNameNode)
+        {
+            var countEdgesInGraph = graph.Nodes
+                .SelectMany(x => x.Edges)
+                .Where(x => !x.Node1.Name.Contains("Station"))
+                .Distinct()
+                .Count();
+            var setCurrentNames = graph.Nodes
+                .SelectMany(x => x.Edges)
+                .Where(x => !x.Node1.Name.Contains("Station"))
+                .SelectMany(edge => new List<string>() { edge .Node1.Name, edge.Node2.Name })
+                .Distinct();
+            if (countEdgesInGraph < setCurrentNames.Count() - 1)
+                return true;
+            foreach (var name in setOfAllNameNode)
+                if (!setCurrentNames.Contains(name))
+                    return true;
+            return false;
+        }
+
+        public HashSet<string> PrimaryInitialization(List<Edge> unicEdges,HashSet<string> setOfAllNameNode)
+        {
+            foreach (var e in unicEdges)
+            {
+                setOfAllNameNode.Add(e.Node1.Name);
+                setOfAllNameNode.Add(e.Node2.Name);
+            }
+            return setOfAllNameNode;
         }
     }
 }
