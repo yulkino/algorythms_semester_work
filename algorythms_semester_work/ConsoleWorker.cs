@@ -11,9 +11,13 @@ namespace algorythms_semester_work
         public void StartProcessing()
         {
             Clear();
-            WriteLine("What do you want:\n" +
+            WriteLine("What do you want?\n" +
                 "1. Random graph\n" +
-                "2. Network of routers");
+                "2. Random network of routers and station\n" +
+                "3. Kruskal's Algorythm with random graph\n" +
+                "4. Kruskal's Algorythm with random network of routers and station\n" +
+                "5. Reverse Delete Algorythm with random graph\n" +
+                "6. Reverse Delete Algorythm random network of routers and station\n");
             var key = ReadKey();
             switch(key.Key)
             {
@@ -23,28 +27,56 @@ namespace algorythms_semester_work
                 case ConsoleKey.D2:
                     ShowShowNetwork();
                     break;
+                case ConsoleKey.D3:
+                    ShowKruskalsAlgorythm(new GraphWorker().BuildNewWeightGrahp(10));
+                    break;
+                case ConsoleKey.D4:
+                    ShowKruskalsAlgorythm(new GraphWorker().CreateNetwork(6));
+                    break;
+                case ConsoleKey.D5:
+                    ShowReverseDeleteAlgorythm(new GraphWorker().BuildNewWeightGrahp(10));
+                    break;
+                case ConsoleKey.D6:
+                    ShowReverseDeleteAlgorythm(new GraphWorker().CreateNetwork(6));
+                    break;
             };
         }
 
-        public void ShowRandomGraph()
+        void ShowRandomGraph()
         {
             Clear();
-            var graphWorker = new GraphWorker();
-            var graph = graphWorker.BuildNewWeightGrahp(10);
+            var graph = new GraphWorker().BuildNewWeightGrahp(10);
             WriteLine(graph);
-            ReturnIntoStrtWindow();
+            ReturnIntoStartWindow();
         }
 
-        public void ShowShowNetwork()
+        void ShowShowNetwork()
         {
             Clear();
-            var graphWorker = new GraphWorker();
-            var network = graphWorker.CreateNetwork(4);
+            var network = new GraphWorker().CreateNetwork(4);
             WriteLine(network);
-            ReturnIntoStrtWindow();
+            ReturnIntoStartWindow();
         }
 
-        public void ReturnIntoStrtWindow()
+        void ShowKruskalsAlgorythm(WeightedGraph network)
+        {
+            Clear();
+            var alg = new Algorythms();
+            WriteLine(network + "\n");
+            WriteLine(alg.KruskalsAlgorythm(network));
+            ReturnIntoStartWindow();
+        }
+
+        void ShowReverseDeleteAlgorythm(WeightedGraph graph)
+        {
+            Clear();
+            var alg = new Algorythms();
+            WriteLine(graph + "\n");
+            WriteLine(alg.ReverseDeleteAlgorythm(graph));
+            ReturnIntoStartWindow();
+        }
+
+        void ReturnIntoStartWindow()
         {
             var key = ReadKey();
             if (key.Key == ConsoleKey.Escape)

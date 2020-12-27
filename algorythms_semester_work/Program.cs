@@ -7,13 +7,15 @@ namespace algorythms_semester_work
     {
         static void Main(string[] args)
         {
-            var network = Check(6);
-            WriteLine(new Algorythms().ReverseDeleteAlgorythm(network));
-            ReadKey();
+            new ConsoleWorker().StartProcessing();
+            //var network = new GraphWorker().CreateNetwork(6);
+            //WriteLine(network);
+            //WriteLine(new Algorythms().ReverseDeleteAlgorythm(network));
+            //ReadKey();
             //new ConsoleWorker().StartProcessing();
         }
 
-        static WeightedGraph Check(int countNode)
+        WeightedGraph CreateNewNetwork(int countNode)
         {
             var network = new WeightedGraph();
             for (var i = 0; i < countNode; i++)

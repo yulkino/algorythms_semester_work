@@ -7,6 +7,7 @@ namespace algorythms_semester_work
 {
     class GraphWorker
     {
+
         public WeightedGraph BuildNewWeightGrahp(int countNode)
         {
             var weightGraph = new WeightedGraph();

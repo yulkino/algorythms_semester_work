@@ -42,9 +42,9 @@ namespace algorythms_semester_work
             var result = "";
             if (Edges.Any())
                 foreach (var e in Edges)
-                    result += $"{Name}: {e} \n";
+                    result += $"{Name}:\t {e} \n";
             else
-                result += $"{Name} single node \n";
+                result += $"{Name}\t single node \n";
             return result;
         }
     }

@@ -35,7 +35,7 @@ namespace algorythms_semester_work
 
         public override string ToString()
         {
-            return $"{Node1.Name} <--{Weight}--> {Node2.Name}";
+            return $"{Node1.Name} \t<--{Weight}-->\t{Node2.Name}";
         }
     }
 }
